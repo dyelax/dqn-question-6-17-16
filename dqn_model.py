@@ -48,8 +48,6 @@ class DQN_Model:
 			"""
 			losses = []
 
-			print 'pred_Qs:, ',pred_Qs
-
 			for i in xrange(BATCH_SIZE):
 				a = results[i, 0]
 				r = results[i, 1]
@@ -57,8 +55,6 @@ class DQN_Model:
 				target_Q  = results[i, 3]
 
 				pred_Q = tf.gather(pred_Qs[i, :], tf.to_int32(a))
-
-				print 'pred_Q', pred_Q
 
 				y = r
 				if s_ is not None: #if the episode doesn't terminate after s
@@ -168,7 +164,6 @@ class DQN_Model:
 		##
 
 		self.train_preds = predict(self.train_states)
-		print 'train_preds: ',self.train_preds
 		self.loss = tf.reduce_mean(qloss(self.train_results, self.train_preds))
 		self.optimizer = tf.train.RMSPropOptimizer(
 			LEARN_RATE, momentum=MOMENTUM).minimize(self.loss)
